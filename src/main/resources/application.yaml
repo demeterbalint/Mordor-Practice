@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mordor_practice?serverTimezone=UTC&useSSL=false
+    username: root
+    password: test1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+  http:
+    encoding:
+      # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly.
+      charset: UTF-8
+      # Enable http encoding support.
+      enabled: true
+      # Force the encoding to the configured charset on HTTP requests and responses.
+      force: true
+
+logging:
+  level:
+    hu.progmasters: debug
+    org.springframework.web: info
+    org.hibernate: error
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
