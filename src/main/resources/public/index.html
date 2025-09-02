@@ -37,6 +37,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" id="list-link">Orc list</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="new-horde-link">New Horde</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="horde-list-link">Horde List</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -51,6 +57,7 @@
             <th>Race</th>
             <th>Kill count</th>
             <th>Weapons</th>
+            <th>Horde</th>
             <th></th>
         </tr>
         </thead>
@@ -69,6 +76,7 @@
                 <button class="btn btn-sm btn-success" type="submit">Edit</button>
                 <button class="btn btn-sm btn-danger" type="submit">Delete</button>
             </td>
+            <td>Some horde</td>
         </tr>
         </tbody>
     </table>
@@ -99,8 +107,52 @@
         <input class="form-control" id="orc-kill-count" type="number"/>
         <br/>
 
+        <label for="orc-horde-name">Horde name</label>
+        <select class="form-control" id="orc-horde-name">
+            <option value="foobar">Some horde</option>
+        </select>
+        <br>
+
         <button class="btn btn-success" id="orc-submit" type="submit">Submit</button>
     </form>
+</div>
+
+<div class="container theme-showcase" id="horde-form-div" role="main">
+    <h2>Horde form</h2>
+    <form class="form-horizontal" id="horde-form">
+        <input class="form-control" id="horde-id" type="hidden"/>
+
+        <label for="horde-name">Name</label>
+        <input class="form-control" id="horde-name" type="text"/>
+        <br/>
+
+        <button class="btn btn-success" id="horde-submit" type="submit">Submit</button>
+    </form>
+</div>
+
+<div class="container theme-showcase" id="horde-list-div" role="main">
+    <h2>Horde list</h2>
+    <table class="table table-striped" id="horde-list-table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Horde name</th>
+            <th>Headcount</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="horde-list-table-body">
+        <tr>
+            <td>1</td>
+            <td>Sample horde</td>
+            <td>500</td>
+            <td>
+                <button class="btn btn-sm btn-success" type="submit">Edit</button>
+                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <br>
@@ -122,6 +174,8 @@
 <script src="js/orcList.js"></script>
 <script src="js/orcForm.js"></script>
 <script src="js/events.js"></script>
+<script src="js/hordeForm.js"></script>
+<script src="js/hordeList.js"></script>
 
 </body>
 </html>

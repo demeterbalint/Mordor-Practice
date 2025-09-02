@@ -49,6 +49,9 @@ public class OrcService {
 
     public void remove(Integer orcId) {
         Orc orc = findOrcById(orcId);
+        if (orc.getHordeName() != null) {
+            hordeService.removeOrc(orc.getName());
+        }
         orcRepository.delete(orc);
     }
 

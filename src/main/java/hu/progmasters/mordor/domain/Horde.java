@@ -15,11 +15,15 @@ public class Horde {
 
     private String name;
 
+    @ElementCollection
     private List<String> orcList;
+
+    private int headcount;
 
     public Horde(HordeForm hordeForm) {
         this.name = hordeForm.getName();
         this.orcList = new ArrayList<>();
+        this.headcount = 0;
     }
 
     public Horde() {
@@ -39,5 +43,13 @@ public class Horde {
 
     public List<String> getOrcList() {
         return orcList;
+    }
+
+    public int getHeadcount() {
+        return headcount;
+    }
+
+    public void setHeadcount(int headcount) {
+        this.headcount = headcount;
     }
 }

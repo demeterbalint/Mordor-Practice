@@ -22,6 +22,13 @@ function renderOrc(idx, orc) {
     const killCountCell = document.createElement("td");
     killCountCell.innerHTML = orc.killCount;
 
+    const orcHordeCell = document.createElement("td");
+    if (orc.hordeName == null) {
+        orcHordeCell.innerHTML = "-";
+    } else {
+        orcHordeCell.innerHTML = orc.hordeName;
+    }
+
     const buttonCell = document.createElement("td");
 
     const deleteButton = document.createElement("button");
@@ -29,7 +36,6 @@ function renderOrc(idx, orc) {
     deleteButton.setAttribute("id", "delete-" + orc.id);
     deleteButton.setAttribute("class", "btn btn-danger delete-button");
     deleteButton.onclick = () => {
-        // TODO
         deleteOrc(orc);
     };
 
@@ -38,6 +44,7 @@ function renderOrc(idx, orc) {
     row.appendChild(raceCell);
     row.appendChild(killCountCell);
     row.appendChild(weaponsCell);
+    row.appendChild(orcHordeCell);
     row.appendChild(buttonCell);
     buttonCell.appendChild(deleteButton);
     return row;

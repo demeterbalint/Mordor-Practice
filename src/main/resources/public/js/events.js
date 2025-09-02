@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
         renderOrcs();
     };
 
+    document.getElementById("new-horde-link").onclick = () => {
+        showNewHordeForm();
+    }
+
+    document.getElementById("horde-list-link").onclick = () => {
+        renderHordes();
+    }
+
     document.getElementById("orc-form").onsubmit = (event) => {
         event.preventDefault(); //disable default browser form submit
     };
@@ -21,6 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("orc-submit").onclick = () => {
         submitOrc();
     };
+
+    document.getElementById("horde-form").onclick = (event) => {
+        event.preventDefault();
+    }
+
+    document.getElementById("horde-submit").onclick = () => {
+        submitHorde();
+    }
 
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {

@@ -6,12 +6,12 @@ public class HordeListItem {
 
     private Integer id;
     private String name;
-    private Integer headcount;
+    private int headcount;
 
     public HordeListItem(Horde horde) {
         this.id = horde.getId();
         this.name = horde.getName();
-        this.headcount = horde.getOrcList().size();
+        this.headcount = horde.getHeadcount();
     }
 
     public Integer getId() {

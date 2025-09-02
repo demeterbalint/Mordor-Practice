@@ -1,5 +1,6 @@
 let weapons;
 let races;
+let hordes;
 
 
 function clearForm() {
@@ -32,6 +33,19 @@ function clearForm() {
     }
 
     document.getElementById("orc-kill-count").value = "";
+
+    document.getElementById("orc-horde-name").innerHTML = "";
+    let hordeOption;
+    hordeOption = document.createElement("option");
+    hordeOption.value = "";
+    hordeOption.innerHTML = "No Horde";
+    document.getElementById("orc-horde-name").appendChild(hordeOption);
+    for (let i = 0; i < hordes.length; i++) {
+        hordeOption = document.createElement("option");
+        hordeOption.value = hordes[i].name;  // Use name instead of id
+        hordeOption.innerHTML = hordes[i].name;
+        document.getElementById("orc-horde-name").appendChild(hordeOption);
+    }
 }
 
 
@@ -58,6 +72,11 @@ function parseOrcForm() {
     orc.killCount = document.getElementById("orc-kill-count").value;
     if (orc.killCount === "")
         orc.killCount = 0;
+    
+    orc.hordeName = document.getElementById("orc-horde-name").value;
+    if (orc.hordeName === "") {
+        orc.hordeName = null;
+    }
 
     return orc;
 }
@@ -77,6 +96,7 @@ function updateRaces() {
     return fetch(base_url + "/orcs/races", {method: 'GET'})
         .then(resp => resp.json())
         .then(data => {
+            console.log(data);
             races = data
         })
         .catch(err => {
@@ -84,13 +104,28 @@ function updateRaces() {
         });
 }
 
+function updateHordes() {
+    return fetch(base_url + "/hordes", {method: 'GET'})
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data);
+            hordes = data;
+        })
+        .catch(err => {
+            console.warn(err)
+        })
+}
+
 function showNewForm() {
-    updateWeapons()
+    updateHordes()
         .then(() => {
-            updateRaces()
+            updateWeapons()
                 .then(() => {
-                    clearForm();
-                    showComponent("orc-form-div");
+                    updateRaces()
+                        .then(() => {
+                            clearForm();
+                            showComponent("orc-form-div");
+                        })
                 })
         })
         .catch(err => {

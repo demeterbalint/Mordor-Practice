@@ -3,11 +3,14 @@ package hu.progmasters.mordor.service;
 import hu.progmasters.mordor.domain.Horde;
 import hu.progmasters.mordor.domain.Orc;
 import hu.progmasters.mordor.dto.HordeForm;
+import hu.progmasters.mordor.dto.HordeListItem;
 import hu.progmasters.mordor.repository.HordeRepository;
 import hu.progmasters.mordor.repository.OrcRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,9 +30,12 @@ public class HordeService {
     }
 
     public void addOrc(String hordeName, String name) {
-        Horde horde = hordeRepository.findHordeByName(hordeName);
-        horde.getOrcList().add(name);
-        hordeRepository.save(horde);
+        if (hordeName != null) {
+            Horde horde = hordeRepository.findHordeByName(hordeName);
+            horde.getOrcList().add(name);
+            updateHeadcount(horde);
+            hordeRepository.save(horde);
+        }
     }
 
     public void changeOrcName(String hordeName, String oldName, String newName) {
@@ -43,12 +49,21 @@ public class HordeService {
         fromHorde.getOrcList().remove(originalName);
         Horde toHorde = hordeRepository.findHordeByName(newHorde);
         toHorde.getOrcList().add(newName);
+        updateHeadcount(fromHorde);
+        updateHeadcount(toHorde);
         hordeRepository.save(fromHorde);
         hordeRepository.save(toHorde);
     }
 
     public void removeOrc(String hordeName, String orcName) {
         Horde horde = hordeRepository.findHordeByName(hordeName);
+        horde.getOrcList().remove(orcName);
+        updateHeadcount(horde);
+        hordeRepository.save(horde);
+    }
+
+    public void removeOrc(String orcName) {
+        Horde horde = hordeRepository.findHordeByOrcName(orcName);
         horde.getOrcList().remove(orcName);
         hordeRepository.save(horde);
     }
@@ -72,5 +87,13 @@ public class HordeService {
             orcRepository.save(orc);
         });
         hordeRepository.delete(horde);
+    }
+
+    public List<HordeListItem> findAll() {
+        return hordeRepository.findAll().stream().peek(this::updateHeadcount).map(HordeListItem::new).toList();
+    }
+
+    private void updateHeadcount(Horde horde) {
+        horde.setHeadcount(horde.getOrcList().size());
     }
 }
