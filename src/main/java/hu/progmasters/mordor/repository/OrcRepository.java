@@ -22,4 +22,6 @@ public interface OrcRepository extends JpaRepository<Orc, Integer> {
 
     //check https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
     List<Orc> findByOrderByKillCountDesc();
+
+    Orc findByName(String name);
 }

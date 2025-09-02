@@ -24,4 +24,10 @@ public class HordeController {
         hordeService.saveHorde(hordeForm);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PutMapping("/${id}")
+    public ResponseEntity updateHorde(@RequestBody HordeForm hordeForm, @PathVariable Integer id) {
+        hordeService.updateHorde(id, hordeForm);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

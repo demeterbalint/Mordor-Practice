@@ -1,8 +1,10 @@
 package hu.progmasters.mordor.service;
 
 import hu.progmasters.mordor.domain.Horde;
+import hu.progmasters.mordor.domain.Orc;
 import hu.progmasters.mordor.dto.HordeForm;
 import hu.progmasters.mordor.repository.HordeRepository;
+import hu.progmasters.mordor.repository.OrcRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,14 @@ import org.springframework.stereotype.Service;
 public class HordeService {
 
     private HordeRepository hordeRepository;
+    private OrcService orcService;
+    private OrcRepository orcRepository;
 
     @Autowired
-    public HordeService(HordeRepository hordeRepository) {
+    public HordeService(HordeRepository hordeRepository, OrcService orcService, OrcRepository orcRepository) {
         this.hordeRepository = hordeRepository;
+        this.orcService = orcService;
+        this.orcRepository = orcRepository;
     }
 
     public void saveHorde(HordeForm hordeForm) {
@@ -46,6 +52,17 @@ public class HordeService {
     public void removeOrc(String hordeName, String orcName) {
         Horde horde = hordeRepository.findHordeByName(hordeName);
         horde.getOrcList().remove(orcName);
+        hordeRepository.save(horde);
+    }
+
+    public void updateHorde(Integer id, HordeForm hordeForm) {
+        Horde horde = hordeRepository.findHordeById(id);
+        horde.setName(hordeForm.getName());
+        horde.getOrcList().forEach(orcName -> {
+            Orc orc = orcService.findOrcByName(orcName);
+            orc.setHordeName(hordeForm.getName());
+            orcRepository.save(orc);
+        });
         hordeRepository.save(horde);
     }
 }
