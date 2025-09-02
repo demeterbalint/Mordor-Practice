@@ -17,6 +17,7 @@ import hu.progmasters.mordor.domain.WeaponType;
 import hu.progmasters.mordor.dto.OrcDetails;
 import hu.progmasters.mordor.dto.OrcForm;
 import hu.progmasters.mordor.dto.OrcListItem;
+import hu.progmasters.mordor.service.HordeService;
 import hu.progmasters.mordor.service.OrcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,10 +35,12 @@ import java.util.Map;
 public class OrcController {
 
     private OrcService orcService;
+    private HordeService  hordeService;
 
     @Autowired
-    public OrcController(OrcService orcService) {
+    public OrcController(OrcService orcService, HordeService hordeService) {
         this.orcService = orcService;
+        this.hordeService = hordeService;
     }
 
     @ResponseBody
@@ -77,6 +80,7 @@ public class OrcController {
     @PostMapping
     public ResponseEntity saveOrc(@RequestBody OrcForm orcForm) {
         orcService.save(orcForm);
+        hordeService.addOrc(orcForm.getHordeName(), orcForm.getName());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

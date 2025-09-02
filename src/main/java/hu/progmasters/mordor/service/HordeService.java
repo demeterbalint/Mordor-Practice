@@ -22,9 +22,9 @@ public class HordeService {
         hordeRepository.save(new Horde(hordeForm));
     }
 
-    /*public void addOrc(String hordeName, String name) {
+    public void addOrc(String hordeName, String name) {
         Horde horde = hordeRepository.findHordeByName(hordeName);
         horde.getOrcList().add(name);
         hordeRepository.save(horde);
-    }*/
+    }
 }
