@@ -21,4 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("orc-submit").onclick = () => {
         submitOrc();
     };
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const navbarCollapse = document.getElementById('navbar');
+            if (navbarCollapse.classList.contains('show')) {
+                $('.navbar-collapse').collapse('hide');
+            }
+        })
+    })
 });
