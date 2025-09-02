@@ -14,13 +14,11 @@ import org.springframework.stereotype.Service;
 public class HordeService {
 
     private HordeRepository hordeRepository;
-    private OrcService orcService;
     private OrcRepository orcRepository;
 
     @Autowired
-    public HordeService(HordeRepository hordeRepository, OrcService orcService, OrcRepository orcRepository) {
+    public HordeService(HordeRepository hordeRepository, OrcRepository orcRepository) {
         this.hordeRepository = hordeRepository;
-        this.orcService = orcService;
         this.orcRepository = orcRepository;
     }
 
@@ -59,7 +57,7 @@ public class HordeService {
         Horde horde = hordeRepository.findHordeById(id);
         horde.setName(hordeForm.getName());
         horde.getOrcList().forEach(orcName -> {
-            Orc orc = orcService.findOrcByName(orcName);
+            Orc orc = orcRepository.findOrcByName(orcName);
             orc.setHordeName(hordeForm.getName());
             orcRepository.save(orc);
         });
@@ -69,7 +67,7 @@ public class HordeService {
     public void deleteHorde(Integer id) {
         Horde horde = hordeRepository.findHordeById(id);
         horde.getOrcList().forEach(orcName -> {
-            Orc orc = orcService.findOrcByName(orcName);
+            Orc orc = orcRepository.findOrcByName(orcName);
             orc.setHordeName(null);
             orcRepository.save(orc);
         });

@@ -25,6 +25,10 @@ public class Horde {
     public Horde() {
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

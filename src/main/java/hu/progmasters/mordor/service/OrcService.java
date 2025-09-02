@@ -95,8 +95,4 @@ public class OrcService {
                 .findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
-
-    public Orc findOrcByName(String name) {
-        return orcRepository.findByName(name);
-    }
 }

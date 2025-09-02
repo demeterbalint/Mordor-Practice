@@ -25,13 +25,13 @@ public class HordeController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/${id}")
+    @PutMapping("/{id}")
     public ResponseEntity updateHorde(@RequestBody HordeForm hordeForm, @PathVariable Integer id) {
         hordeService.updateHorde(id, hordeForm);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/${id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteHorde(@PathVariable Integer id) {
         hordeService.deleteHorde(id);
         return new ResponseEntity<>(HttpStatus.OK);
