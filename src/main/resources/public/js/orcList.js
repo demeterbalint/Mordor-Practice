@@ -30,6 +30,7 @@ function renderOrc(idx, orc) {
     deleteButton.setAttribute("class", "btn btn-danger delete-button");
     deleteButton.onclick = () => {
         // TODO
+        deleteOrc(orc);
     };
 
     row.appendChild(idCell);
@@ -61,4 +62,15 @@ function renderOrcs() {
         .catch(err => {
             document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
         });
+}
+
+function deleteOrc(orc) {
+    fetch(base_url + `/orcs/${orc.id}`, {method: 'DELETE'})
+        .then(resp => {
+            console.log('Orc ' + orc.name + ' deleted');
+            renderOrcs();
+        })
+        .catch(err => {
+            document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
+        })
 }
