@@ -27,4 +27,25 @@ public class HordeService {
         horde.getOrcList().add(name);
         hordeRepository.save(horde);
     }
+
+    public void changeOrcName(String hordeName, String oldName, String newName) {
+        Horde horde = hordeRepository.findHordeByName(hordeName);
+        horde.getOrcList().set(horde.getOrcList().indexOf(oldName), newName);
+        hordeRepository.save(horde);
+    }
+
+    public void changeHorde(String originalHorde, String originalName, String newHorde, String newName) {
+        Horde fromHorde = hordeRepository.findHordeByName(originalHorde);
+        fromHorde.getOrcList().remove(originalName);
+        Horde toHorde = hordeRepository.findHordeByName(newHorde);
+        toHorde.getOrcList().add(newName);
+        hordeRepository.save(fromHorde);
+        hordeRepository.save(toHorde);
+    }
+
+    public void removeOrc(String hordeName, String orcName) {
+        Horde horde = hordeRepository.findHordeByName(hordeName);
+        horde.getOrcList().remove(orcName);
+        hordeRepository.save(horde);
+    }
 }

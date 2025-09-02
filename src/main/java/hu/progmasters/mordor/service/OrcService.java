@@ -20,10 +20,12 @@ import java.util.stream.Collectors;
 public class OrcService {
 
     private OrcRepository orcRepository;
+    private HordeService hordeService;
 
     @Autowired
-    public OrcService(OrcRepository orcRepository) {
+    public OrcService(OrcRepository orcRepository, HordeService hordeService) {
         this.orcRepository = orcRepository;
+        this.hordeService = hordeService;
     }
 
     public List<OrcListItem> findAll() {
@@ -56,9 +58,31 @@ public class OrcService {
     }
 
     private void updateOrcFields(Orc orcToUpdate, OrcForm orcForm) {
+        if (orcToUpdate.getHordeName() == null && orcForm.getHordeName() == null) {
+            updateOrcAndHorde(orcToUpdate, orcForm);
+        } else if (orcToUpdate.getHordeName() == null && orcForm.getHordeName() != null) {
+            hordeService.addOrc(orcForm.getHordeName(), orcForm.getName());
+            updateOrcAndHorde(orcToUpdate, orcForm);
+        } else if (orcForm.getHordeName() == null) {
+            hordeService.removeOrc(orcToUpdate.getHordeName(), orcToUpdate.getName());
+            updateOrcAndHorde(orcToUpdate, orcForm);
+        } else if (!orcToUpdate.getHordeName().equals(orcForm.getHordeName())) {
+            hordeService.changeHorde(orcToUpdate.getHordeName(), orcToUpdate.getName(), orcForm.getHordeName(), orcForm.getName());
+            updateOrcAndHorde(orcToUpdate, orcForm);
+        } else if (!orcToUpdate.getName().equals(orcForm.getName())) {
+            hordeService.changeOrcName(orcForm.getHordeName(), orcToUpdate.getName(), orcForm.getName());
+            updateOrcAndHorde(orcToUpdate, orcForm);
+        } else {
+            updateOrcAndHorde(orcToUpdate, orcForm);
+        }
+
+    }
+
+    private void updateOrcAndHorde(Orc orcToUpdate, OrcForm orcForm) {
         orcToUpdate.setKillCount(orcForm.getKillCount());
         orcToUpdate.setName(orcForm.getName());
         orcToUpdate.setOrcRaceType(OrcRaceType.valueOf(orcForm.getOrcRaceType()));
+        orcToUpdate.getWeapons().clear();
         for (String weapon : orcForm.getWeapons()) {
             orcToUpdate.getWeapons().add(WeaponType.valueOf(weapon));
         }
