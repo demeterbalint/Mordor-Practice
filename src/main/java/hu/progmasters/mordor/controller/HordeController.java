@@ -30,4 +30,10 @@ public class HordeController {
         hordeService.updateHorde(id, hordeForm);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/${id}")
+    public ResponseEntity deleteHorde(@PathVariable Integer id) {
+        hordeService.deleteHorde(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

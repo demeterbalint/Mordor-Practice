@@ -65,4 +65,14 @@ public class HordeService {
         });
         hordeRepository.save(horde);
     }
+
+    public void deleteHorde(Integer id) {
+        Horde horde = hordeRepository.findHordeById(id);
+        horde.getOrcList().forEach(orcName -> {
+            Orc orc = orcService.findOrcByName(orcName);
+            orc.setHordeName(null);
+            orcRepository.save(orc);
+        });
+        hordeRepository.delete(horde);
+    }
 }
