@@ -15,7 +15,9 @@ import hu.progmasters.mordor.dto.OrcForm;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Orc {
@@ -35,6 +37,8 @@ public class Orc {
     @ElementCollection(targetClass = WeaponType.class, fetch = FetchType.EAGER)
     private List<WeaponType> weapons = new ArrayList<>();
 
+    private String hordeName;
+
     public Orc(OrcForm orcForm) {
         this.name = orcForm.getName();
         this.killCount = orcForm.getKillCount();
@@ -42,6 +46,7 @@ public class Orc {
         for (String weapon : orcForm.getWeapons()) {
             weapons.add(WeaponType.valueOf(weapon));
         }
+        this.hordeName = orcForm.getHordeName();
     }
 
     public Orc() {
@@ -85,6 +90,14 @@ public class Orc {
 
     public void setWeapons(List<WeaponType> weapons) {
         this.weapons = weapons;
+    }
+
+    public String getHordeName() {
+        return hordeName;
+    }
+
+    public void setHordeName(String hordeName) {
+        this.hordeName = hordeName;
     }
 
     @Override

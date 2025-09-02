@@ -24,6 +24,7 @@ public class OrcListItem {
     private String orcRaceType;
     private Integer killCount;
     private List<String> weapons;
+    private String hordeName;
 
     public OrcListItem(Orc orc) {
         this.id = orc.getId();
@@ -34,6 +35,7 @@ public class OrcListItem {
         for (WeaponType weaponType : orc.getWeapons()) {
             this.weapons.add(weaponType.getDisplayName());
         }
+        this.hordeName = orc.getHordeName();
     }
 
     public Integer getId() {
@@ -74,5 +76,13 @@ public class OrcListItem {
 
     public void setWeapons(List<String> weapons) {
         this.weapons = weapons;
+    }
+
+    public String getHordeName() {
+        return hordeName;
+    }
+
+    public void setHordeName(String hordeName) {
+        this.hordeName = hordeName;
     }
 }

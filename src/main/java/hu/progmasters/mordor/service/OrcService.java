@@ -62,6 +62,8 @@ public class OrcService {
         for (String weapon : orcForm.getWeapons()) {
             orcToUpdate.getWeapons().add(WeaponType.valueOf(weapon));
         }
+        orcToUpdate.setHordeName(orcForm.getHordeName());
+        orcRepository.save(orcToUpdate);
     }
 
     private Orc findOrcById(Integer id) {

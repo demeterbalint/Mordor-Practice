@@ -8,6 +8,7 @@ public class OrcForm {
     private String orcRaceType;
     private Integer killCount;
     private List<String> weapons;
+    private String hordeName;
 
     public String getName() {
         return name;
@@ -39,5 +40,13 @@ public class OrcForm {
 
     public void setWeapons(List<String> weapons) {
         this.weapons = weapons;
+    }
+
+    public String getHordeName() {
+        return hordeName;
+    }
+
+    public void setHordeName(String hordeName) {
+        this.hordeName = hordeName;
     }
 }
