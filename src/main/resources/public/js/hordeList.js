@@ -18,7 +18,7 @@ function renderHorde(idx, horde) {
     editButton.setAttribute("class", "btn btn-primary edit-button mr-2");
     editButton.style.width = "40px";
     editButton.onclick = () => {
-        editHorde();
+        editHorde(horde);
     }
 
     const deleteButton = document.createElement("button");
@@ -67,4 +67,14 @@ function deleteHorde(horde) {
         .catch(err => {
             document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
         })
+}
+
+function editHorde(horde) {
+    try {
+        setHordeEditForm(horde);
+        showComponent("horde-form-div");
+    } catch (err) {
+        console.warn(err);
+        document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
+    }
 }

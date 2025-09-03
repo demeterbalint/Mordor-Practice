@@ -17,9 +17,11 @@ function parseHordeForm() {
 
 function submitHorde() {
     const horde = parseHordeForm();
+    const method = horde.id ? "PUT" : "POST";
+    const url = horde.id ? base_url + "/hordes/" + horde.id : base_url +  "/hordes";
 
-    fetch(base_url + "/hordes", {
-        method: "POST",
+    fetch(url, {
+        method: method,
         body: JSON.stringify(horde),
         headers: { "Content-Type": "application/json" }
     })
@@ -30,4 +32,9 @@ function submitHorde() {
             console.log(err);
             document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
         })
+}
+
+function setHordeEditForm(horde) {
+    document.getElementById("horde-id").value = horde.id;
+    document.getElementById("horde-name").value = horde.name;
 }
