@@ -136,9 +136,11 @@ function showNewForm() {
 
 function submitOrc() {
     const orc = parseOrcForm();
+    const method = orc.id? "PUT"  : "POST";
+    const url = orc.id? base_url + "/orcs/" + orc.id : base_url + "/orcs";
 
-    fetch(base_url + "/orcs", {
-        method: 'POST',
+    fetch(url, {
+        method: method,
         body: JSON.stringify(orc),
         headers: {
             "Content-Type": "application/json"
@@ -151,4 +153,58 @@ function submitOrc() {
             console.log(err);
             document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
         });
+}
+
+function setEditForm(orc) {
+    document.getElementById("orc-id").value = orc.id;
+    document.getElementById("orc-name").value = orc.name;
+
+    document.getElementById("orc-race").innerHTML = "";
+    let option;
+    for (let race in races) {
+        option = document.createElement("option");
+        option.value = race;
+        option.innerHTML = races[race];
+        if (races[race] === orc.orcRaceType) {
+            option.selected = true;
+        }
+        document.getElementById("orc-race").appendChild(option);
+    }
+
+    document.getElementById("orc-weapons").innerHTML = "";
+    let checkBox;
+    for (let weapon in weapons) {
+        checkBox = document.createElement("input");
+        checkBox.setAttribute("type", "checkbox");
+        checkBox.setAttribute("id", "weapon" + weapon);
+        checkBox.dataset.value = weapon;
+        if (orc.weapons.includes(weapons[weapon])) {
+            checkBox.checked = true;
+        }
+        const checkBoxLabel = document.createElement("label");
+        checkBoxLabel.setAttribute("for", "weapon" + weapon);
+        checkBoxLabel.innerHTML = "&nbsp;" + weapons[weapon];
+        const br = document.createElement("br");
+        document.getElementById("orc-weapons").appendChild(checkBox);
+        document.getElementById("orc-weapons").appendChild(checkBoxLabel);
+        document.getElementById("orc-weapons").appendChild(br);
+    }
+
+    document.getElementById("orc-kill-count").value = orc.killCount;
+
+    document.getElementById("orc-horde-name").innerHTML = "";
+    let hordeOption;
+    hordeOption = document.createElement("option");
+    hordeOption.value = "";
+    hordeOption.innerHTML = "No Horde";
+    document.getElementById("orc-horde-name").appendChild(hordeOption);
+    for (let i = 0; i < hordes.length; i++) {
+        hordeOption = document.createElement("option");
+        hordeOption.value = hordes[i].name;
+        hordeOption.innerHTML = hordes[i].name;
+        if (orc.hordeName === hordes[i].name) {
+            hordeOption.selected = true;
+        }
+        document.getElementById("orc-horde-name").appendChild(hordeOption);
+    }
 }

@@ -37,7 +37,7 @@ function renderOrc(idx, orc) {
     editButton.setAttribute("class", "btn btn-primary edit-button mr-2");
     editButton.style.width = "40px";
     editButton.onclick = () => {
-        editOrc();
+        editOrc(orc);
     }
 
     const deleteButton = document.createElement("button");
@@ -89,6 +89,18 @@ function deleteOrc(orc) {
             renderOrcs();
         })
         .catch(err => {
+            document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
+        })
+}
+
+function editOrc(orc) {
+    updateHordes()
+        .then(() => updateWeapons())
+        .then(() => updateRaces())
+        .then(() => setEditForm(orc))
+        .then(() => showComponent("orc-form-div"))
+        .catch(err => {
+            console.warn(err);
             document.getElementById("error-div").innerHTML = "<span class='text-danger'>" + err + "</span>";
         })
 }
