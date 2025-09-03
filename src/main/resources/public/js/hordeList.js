@@ -12,10 +12,20 @@ function renderHorde(idx, horde) {
 
     const buttonCell = document.createElement("td");
 
+    const editButton = document.createElement("button");
+    editButton.innerHTML = "<i class=\"fas fa-edit\"></i>";
+    editButton.setAttribute("id", "edit-" + horde.id)
+    editButton.setAttribute("class", "btn btn-primary edit-button mr-2");
+    editButton.style.width = "40px";
+    editButton.onclick = () => {
+        editHorde();
+    }
+
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = "<i class=\"fas fa-trash-alt\"></i>";
     deleteButton.setAttribute("id", "delete-" + horde.id);
     deleteButton.setAttribute("class", "btn btn-danger delete-button");
+    deleteButton.style.width = "40px";
     deleteButton.onclick = () => {
         deleteHorde(horde);
     };
@@ -24,6 +34,7 @@ function renderHorde(idx, horde) {
     row.appendChild(nameCell);
     row.appendChild(headcountCell);
     row.appendChild(buttonCell);
+    buttonCell.appendChild(editButton);
     buttonCell.appendChild(deleteButton);
     return row;
 }

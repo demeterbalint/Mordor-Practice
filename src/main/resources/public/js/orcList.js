@@ -31,10 +31,20 @@ function renderOrc(idx, orc) {
 
     const buttonCell = document.createElement("td");
 
+    const editButton = document.createElement("button");
+    editButton.innerHTML = "<i class=\"fas fa-edit\"></i>";
+    editButton.setAttribute("id", "edit-" + orc.id)
+    editButton.setAttribute("class", "btn btn-primary edit-button mr-2");
+    editButton.style.width = "40px";
+    editButton.onclick = () => {
+        editOrc();
+    }
+
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = "<i class=\"fas fa-trash-alt\"></i>";
     deleteButton.setAttribute("id", "delete-" + orc.id);
     deleteButton.setAttribute("class", "btn btn-danger delete-button");
+    deleteButton.style.width = "40px";
     deleteButton.onclick = () => {
         deleteOrc(orc);
     };
@@ -46,6 +56,7 @@ function renderOrc(idx, orc) {
     row.appendChild(weaponsCell);
     row.appendChild(orcHordeCell);
     row.appendChild(buttonCell);
+    buttonCell.appendChild(editButton);
     buttonCell.appendChild(deleteButton);
     return row;
 }
